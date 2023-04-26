@@ -4,7 +4,7 @@ import os
 
 
 def open_backtest_gui():
-    backtest_file_path = "freq-gui/backtest.py"
+    backtest_file_path = "FreqInsight/backtest.py"
     if os.path.isfile(backtest_file_path):
         os.system(f"/usr/bin/python3 {backtest_file_path}")
     else:
@@ -12,7 +12,7 @@ def open_backtest_gui():
 
 
 def open_hyperopt_gui():
-    hyperopt_file_path = "freq-gui/hyperopt.py"
+    hyperopt_file_path = "FreqInsight/hyperopt.py"
     if os.path.isfile(hyperopt_file_path):
         os.system(f"/usr/bin/python3 {hyperopt_file_path}")
     else:
@@ -20,7 +20,7 @@ def open_hyperopt_gui():
 
 
 def open_download_data_gui():
-    download_data_file_path = "freq-gui/downloaddata.py"
+    download_data_file_path = "FreqInsight/downloaddata.py"
     if os.path.isfile(download_data_file_path):
         os.system(f"/usr/bin/python3 {download_data_file_path}")
     else:
@@ -28,7 +28,7 @@ def open_download_data_gui():
 
 
 def open_config_gui():
-    config_gui_file_path = "freq-gui/config_gui.py"
+    config_gui_file_path = "FreqInsight/config_gui.py"
     if os.path.isfile(config_gui_file_path):
         os.system(f"/usr/bin/python3 {config_gui_file_path}")
     else:

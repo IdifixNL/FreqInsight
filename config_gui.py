@@ -1,6 +1,6 @@
 import tkinter as tk
 import importlib
-import config
+import os
 
 def open_config_menu():
     config_menu = tk.Toplevel()
@@ -25,7 +25,17 @@ def open_config_menu():
     save_button.pack()
 
 def save_location(new_location, new_strategies_path, config_menu):
-    with open("freq-gui/config.py", "w") as f:
+    config_path = "FreqInsight/config.py"
+
+    # check if the config file exists
+    if not os.path.isfile(config_path):
+        # if the file doesn't exist, create it with default values
+        with open(config_path, "w") as f:
+            f.write("location = 'default_location'\n")
+            f.write("strategies_path = 'default_strategies_path'\n")
+
+    # write the new values to the config file
+    with open(config_path, "w") as f:
         f.write(f"location = '{new_location}'\n")
         f.write(f"strategies_path = '{new_strategies_path}'\n")
 
@@ -34,6 +44,17 @@ def save_location(new_location, new_strategies_path, config_menu):
 
     # destroy the configuration menu window
     config_menu.destroy()
+
+# check if the config.py file exists and import it
+if os.path.isfile("FreqInsight/freq-gui/config.py"):
+    import config
+else:
+    # if the file doesn't exist, create it with default values and import it
+    with open("FreqInsight/config.py", "w") as f:
+        f.write("location = 'default_location'\n")
+        f.write("strategies_path = 'default_strategies_path'\n")
+
+    import config
 
 root = tk.Tk()
 root.withdraw()

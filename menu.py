@@ -35,6 +35,10 @@ def open_config_gui():
         messagebox.showerror("Error", "Config GUI file not found.")
 
 
+# Check if config file exists, display warning if not
+if not os.path.isfile("FreqInsight/config.py"):
+    messagebox.showwarning("Warning", "Configuration file not found. Please run configuration first.")
+
 root = tk.Tk()
 root.title("Main Menu")
 

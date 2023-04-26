@@ -32,3 +32,42 @@ To use FreqInsight, you will need the following:
 
 You can install these packages using `pip` by running the following command:
 
+Make sure to run this command in a terminal window with administrator or superuser privileges to ensure that the packages are installed system-wide.
+
+## Installation
+
+To install and use FreqInsight, follow these steps:
+
+1. Clone the FreqInsight repository to your local machine by running the following command:
+
+2. Navigate to the FreqInsight directory and run `menu.py` to start the GUI:
+
+
+3. If this is your first time running FreqInsight, you will see a warning message that the configuration file was not found. Click "OK" to close the message.
+
+4. Next, click the "Configuration" button to open the configuration menu. In the configuration menu, fill in the following information:
+
+* **Location**: The path to the directory where your FreqTrade user data is located. For example, if your FreqTrade user data is located in `/home/user/freqtrade/user_data`, enter `/home/user/freqtrade` as the location.
+
+* **Strategies Path**: The path to the directory where your FreqTrade strategy files are located. For example, if your FreqTrade strategy files are located in `/home/user/freqtrade/strategies`, enter `/home/user/freqtrade/strategies` as the strategies path.
+
+5. Once you have filled in the required information, click "Save" to save the configuration file and close the configuration menu.
+
+6. You are now ready to use FreqInsight to run FreqTrade commands. Select the desired command from the main menu, fill in any required settings, and click "Run" to execute the command.
+
+That's it! If you encounter any issues or have any questions, please refer to the project's GitHub issues page or documentation for assistance.
+
+## Usage
+
+To use FreqInsight, you will need to have FreqTrade running in Docker on your system. Once you have FreqTrade set up, you can follow these steps to use FreqInsight:
+
+1. Open a terminal window and navigate to the FreqInsight directory.
+
+2. Run `menu.py` to start the GUI:
+
+3. Select the desired command from the main menu. For example, to run a backtest, select "Backtest" from the menu.
+
+4. Fill in any required settings for the command. For example, for a backtest, you will need to select the name of the strategy to use, the start date for the backtest.
+
+
+

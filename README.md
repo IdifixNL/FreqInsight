@@ -44,7 +44,7 @@ Make sure to run this command in a terminal window with administrator or superus
 To install and use FreqInsight, follow these steps:
 
 1. Clone the FreqInsight repository to your local machine by running the following command:
-   git clone https://github.com/IdifixNL/FreqInsight.git
+   "git clone https://github.com/IdifixNL/FreqInsight.git"
 
 2. Navigate to the FreqInsight directory and run `menu.py` to start the GUI:
 

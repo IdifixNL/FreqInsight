@@ -59,25 +59,10 @@ To install and use FreqInsight, follow these steps:
 
 5. Once you have filled in the required information, click "Save" to save the configuration file and close the configuration menu.
 
-6. You are now ready to use FreqInsight to run FreqTrade commands. Select the desired command from the main menu, fill in any required settings, and click "Run" to execute the command.
+6. You are now ready to use FreqInsight 
 
-That's it! If you encounter any issues or have any questions, please refer to the project's GitHub issues page or documentation for assistance.
-
-## Usage
-
-To use FreqInsight, you will need to have FreqTrade running in Docker on your system. Once you have FreqTrade set up, you can follow these steps to use FreqInsight:
-
-1. Open a terminal window and navigate to the FreqInsight directory.
-
-2. Run `menu.py` to start the GUI:
-
-3. Select the desired command from the main menu. For example, to run a backtest, select "Backtest" from the menu.
-
-4. Fill in any required settings for the command. For example, for a backtest, you will need to select the name of the strategy to use, the start date for the backtest.
+That's it! If you encounter any issues or have any questions, please refer to the project's GitHub issues page or documentation for assistance. https://github.com/IdifixNL/FreqInsight/issues
 
 
 
-## Usage/Feature requests
 
-Feature request, errors in the documention or application please fill in a issue request.
-https://github.com/IdifixNL/FreqInsight/issues

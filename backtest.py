@@ -9,7 +9,7 @@ def run_backtest():
     location = config.location
     intervals = ["1m", "3m", "5m", "15m", "30m", "1h", "2h", "4h", "6h", "8h", "1d"]
     selected_intervals = [interval for interval, var in zip(intervals, interval_vars) if var.get()]
-    intervals_str = " ".join([f"--timeframe {interval}" for interval in selected_intervals])
+    intervals_str = " ".join([f"--tizmeframe {interval}" for interval in selected_intervals])
     strategy = strategy_var.get()
     timerange = timerange_entry.get() + "-"
     command = f"docker-compose run --rm -v {location}:/freqtrade/user_data freqtrade backtesting --strategy {strategy} --timerange={timerange} {intervals_str}"

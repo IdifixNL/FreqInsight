@@ -16,10 +16,13 @@ def run_hyperopt():
     hyperopt_loss = hyperopt_loss_var.get()
     timerange = timerange_entry.get() + "-"
     cpu = cpu_entry.get()
-    coin_pair = coin_pairs_var.get()
+    coin_pairs = coin_pairs_listbox.curselection()
+    selected_coin_pairs = [coin_pairs_listbox.get(index) for index in coin_pairs]
+    coin_pair = " ".join(selected_coin_pairs)
     command = f"docker-compose run --rm -v {location}:/freqtrade/user_data freqtrade hyperopt --strategy {strategy} --spaces {spaces} -e {epochs} --timeframe {timeframe} --hyperopt-loss {hyperopt_loss} --timerange {timerange} -j {cpu} --pairs {coin_pair}"
     os.chdir(location)
     subprocess.Popen(['xterm', '-hold', '-e', command])
+
 
 def get_available_strategies():
     strategies_path = config.strategies_path
@@ -37,10 +40,12 @@ def get_available_strategies():
 
 config_path = config.config_location
 
+
 def read_config_data(config_path):
     with open(config_path, "r") as file:
         config_data = json.load(file)
     return config_data
+
 
 config_data = read_config_data(config_path)
 
@@ -49,32 +54,32 @@ def get_coin_pairs():
     pair_whitelist = config_data["exchange"]["pair_whitelist"]
     return pair_whitelist
 
-def init_coin_pairs_dropdown(frame, coin_pairs):
-    coin_pairs_label = tk.Label(frame, text="Select a coin pair:")
+
+def init_coin_pairs_listbox(frame, coin_pairs):
+    coin_pairs_label = tk.Label(frame, text="Select coin pairs:")
     coin_pairs_label.pack(side=tk.LEFT)
 
-    coin_pairs_var = tk.StringVar()
-    coin_pairs_dropdown = ttk.Combobox(frame, textvariable=coin_pairs_var, values=coin_pairs)
-    coin_pairs_dropdown.pack(side=tk.LEFT)
+    coin_pairs_listbox = tk.Listbox(frame, selectmode=tk.MULTIPLE)
+    for coin in coin_pairs:
+        coin_pairs_listbox.insert(tk.END, coin)
+    coin_pairs_listbox.pack(side=tk.LEFT)
 
-    return coin_pairs_var
-
+    return coin_pairs_listbox
 
 
 # Get coin pairs from the config_data variable
 coin_pairs = get_coin_pairs()
 
-# Create the main window and initialize the dropdown menu
+# Create the main window and initialize the listbox
 root = tk.Tk()
 root.title("Hyperopt")
 
 coin_pairs_frame = tk.Frame(root, padx=10, pady=10)
 coin_pairs_frame.pack()
-coin_pairs_var = init_coin_pairs_dropdown(coin_pairs_frame, coin_pairs)
+coin_pairs_listbox = init_coin_pairs_listbox(coin_pairs_frame, coin_pairs)
 
 strategy_frame = tk.Frame(root, padx=10, pady=10)
 strategy_frame.pack()
-
 
 root.title("Hyperopt")
 
@@ -138,18 +143,7 @@ cpu_entry.pack(side=tk.LEFT)
 hyperopt_loss_label = tk.Label(hyperopt_loss_frame, text="Hyperopt Loss")
 hyperopt_loss_label.pack(side=tk.LEFT)
 
-hyperopt_loss_options = [
-    "SharpeHyperOptLoss",
-    "SortinoHyperOptLoss",
-    "CalmarHyperOptLoss",
-    "ProfitDrawDownHyperOptLoss",
-    "SharpeHyperOptLossDaily",
-    "SortinoHyperOptLossDaily",
-    "MaxDrawDownHyperOptLoss",
-    "MaxDrawDownRelativeHyperOptLoss",
-    "OnlyProfitHyperOptLoss",
-    "ShortTradeDurHyperOptLoss",
-]
+hyperopt_loss_options = [    "SharpeHyperOptLoss",    "SortinoHyperOptLoss",    "CalmarHyperOptLoss",    "ProfitDrawDownHyperOptLoss",    "SharpeHyperOptLossDaily",    "SortinoHyperOptLossDaily",    "MaxDrawDownHyperOptLoss",    "MaxDrawDownRelativeHyperOptLoss",    "OnlyProfitHyperOptLoss",    "ShortTradeDurHyperOptLoss",]
 
 hyperopt_loss_var = tk.StringVar(root)
 hyperopt_loss_var.set(hyperopt_loss_options[0])

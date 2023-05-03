@@ -11,7 +11,7 @@ def run_docker_command(days, intervals):
     subprocess.Popen(['xterm', '-e', command])
 
 root = tk.Tk()
-
+root.title("Data-downloader")
 # create a label and entry for days input
 days_label = tk.Label(root, text="Days:")
 days_label.pack(side=tk.LEFT)

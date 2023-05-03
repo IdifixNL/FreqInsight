@@ -4,6 +4,8 @@ import subprocess
 import os
 import re
 import config
+import json
+
 
 def run_hyperopt():
     location = config.location
@@ -14,7 +16,8 @@ def run_hyperopt():
     hyperopt_loss = hyperopt_loss_var.get()
     timerange = timerange_entry.get() + "-"
     cpu = cpu_entry.get()
-    command = f"docker-compose run --rm -v {location}:/freqtrade/user_data freqtrade hyperopt --strategy {strategy} --spaces {spaces} -e {epochs} --timeframe {timeframe} --hyperopt-loss {hyperopt_loss} --timerange {timerange} -j {cpu}"
+    coin_pair = coin_pairs_var.get()
+    command = f"docker-compose run --rm -v {location}:/freqtrade/user_data freqtrade hyperopt --strategy {strategy} --spaces {spaces} -e {epochs} --timeframe {timeframe} --hyperopt-loss {hyperopt_loss} --timerange {timerange} -j {cpu} --pairs {coin_pair}"
     os.chdir(location)
     subprocess.Popen(['xterm', '-hold', '-e', command])
 
@@ -31,7 +34,48 @@ def get_available_strategies():
                 available_strategies.append(strategy_name)
     return available_strategies
 
+
+config_path = "dev-freq/ft_userdata/user_data/config.json"
+
+def read_config_data(config_path):
+    with open(config_path, "r") as file:
+        config_data = json.load(file)
+    return config_data
+
+config_data = read_config_data(config_path)
+
+
+def get_coin_pairs():
+    pair_whitelist = config_data["exchange"]["pair_whitelist"]
+    return pair_whitelist
+
+def init_coin_pairs_dropdown(frame, coin_pairs):
+    coin_pairs_label = tk.Label(frame, text="Select a coin pair:")
+    coin_pairs_label.pack(side=tk.LEFT)
+
+    coin_pairs_var = tk.StringVar()
+    coin_pairs_dropdown = ttk.Combobox(frame, textvariable=coin_pairs_var, values=coin_pairs)
+    coin_pairs_dropdown.pack(side=tk.LEFT)
+
+    return coin_pairs_var
+
+
+
+# Get coin pairs from the config_data variable
+coin_pairs = get_coin_pairs()
+
+# Create the main window and initialize the dropdown menu
 root = tk.Tk()
+root.title("Hyperopt")
+
+coin_pairs_frame = tk.Frame(root, padx=10, pady=10)
+coin_pairs_frame.pack()
+coin_pairs_var = init_coin_pairs_dropdown(coin_pairs_frame, coin_pairs)
+
+strategy_frame = tk.Frame(root, padx=10, pady=10)
+strategy_frame.pack()
+
+
 root.title("Hyperopt")
 
 strategy_frame = tk.Frame(root, padx=10, pady=10)

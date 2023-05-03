@@ -34,8 +34,8 @@ def get_available_strategies():
                 available_strategies.append(strategy_name)
     return available_strategies
 
-
-config_path = "dev-freq/ft_userdata/user_data/config.json"
+### this need to be in config menu = config.py
+config_path = "/home/nico/Documents/projects/trader/dev-freq/ft_userdata/user_data/config.json"
 
 def read_config_data(config_path):
     with open(config_path, "r") as file:

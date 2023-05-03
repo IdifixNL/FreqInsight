@@ -20,11 +20,18 @@ def open_config_menu():
     strategy_entry.insert(0, config.strategies_path)
     strategy_entry.pack(side=tk.LEFT)
 
-    # create a button to save the new location and strategies_path values to the config file
-    save_button = tk.Button(config_menu, text="Save", command=lambda: save_location(location_entry.get(), strategy_entry.get(), config_menu))
+    # create a label and entry for the config location variable
+    config_label = tk.Label(config_menu, text="Config Location:")
+    config_label.pack(side=tk.LEFT)
+    config_entry = tk.Entry(config_menu, width=50)
+    config_entry.insert(0, config.config_location)
+    config_entry.pack(side=tk.LEFT)
+
+    # create a button to save the new location, strategies_path, and config_location values to the config file
+    save_button = tk.Button(config_menu, text="Save", command=lambda: save_location(location_entry.get(), strategy_entry.get(), config_entry.get(), config_menu))
     save_button.pack()
 
-def save_location(new_location, new_strategies_path, config_menu):
+def save_location(new_location, new_strategies_path, new_config_location, config_menu):
     config_path = "FreqInsight/config.py"
 
     # check if the config file exists
@@ -33,13 +40,15 @@ def save_location(new_location, new_strategies_path, config_menu):
         with open(config_path, "w") as f:
             f.write("location = 'default_location'\n")
             f.write("strategies_path = 'default_strategies_path'\n")
+            f.write("config_location = 'default_config_location'\n")
 
     # write the new values to the config file
     with open(config_path, "w") as f:
         f.write(f"location = '{new_location}'\n")
         f.write(f"strategies_path = '{new_strategies_path}'\n")
+        f.write(f"config_location = '{new_config_location}'\n")
 
-    # reload the config module to use the new values of location and strategies_path
+    # reload the config module to use the new values of location, strategies_path, and config_location
     importlib.reload(config)
 
     # destroy the configuration menu window
@@ -53,6 +62,7 @@ else:
     with open("FreqInsight/config.py", "w") as f:
         f.write("location = 'default_location'\n")
         f.write("strategies_path = 'default_strategies_path'\n")
+        f.write("config_location = 'default_config_location'\n")
 
     import config
 

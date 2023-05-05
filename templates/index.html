@@ -30,18 +30,28 @@
               <li class="nav-item">
                 <a class="nav-link" href="#" id="datadownload-btn">Datadownload</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" id="configuration-btn">Configuration</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" id="help-btn">Help</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" id="test-btn">Test</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" id="logs-btn">Logs</a>
+              </li>
             </ul>
           </div>
         </div>
       </nav>
-    </header>
+      </header>
 
-    <main>
+      <main class="container">
       <div id="backtest" class="section">
         <h2>Backtest</h2>
-        <p id="backtest-message"></p>
-        <pre id="backtest-output"></pre>
-        <button id="run-backtest">Run Backtest</button>
+        <!-- Your Backtest content here -->
       </div>
 
       <div id="hyperopt" class="section">
@@ -53,20 +63,39 @@
         <h2>Datadownload</h2>
         <!-- Your Datadownload content here -->
       </div>
-    </main>
 
-    <script>
+      <div id="configuration" class="section">
+        <h2>Configuration</h2>
+        <!-- Your Configuration content here -->
+      </div>
+
+      <div id="help" class="section">
+        <h2>Help</h2>
+        <!-- Your Help content here -->
+      </div>
+
+      <div id="test" class="section">
+        <h2>Test</h2>
+        <!-- Your Test content here -->
+      </div>
+
+      <div id="logs" class="section">
+        <h2>Logs</h2>
+        <!-- Your Logs content here -->
+      </div>
+      </main>
+
+      <script>
+      // Hide all sections except the first one
+      $(".section:not(:first)").hide();
+
+      // Function to show the section with the given id and hide others
       function showSection(id) {
-        $('.section').hide(); // Hide all sections
-        $('#' + id).show(); // Show the selected section
+        $(".section").hide();
+        $("#" + id).show();
       }
 
-      // Hide all sections by default
-      $('.section').hide();
-
-      // Show the first section (Backtest) by default
-      showSection('backtest');
-
+      // Event listeners for menu buttons
       $('#backtest-btn').click(function() {
         showSection('backtest');
       });
@@ -79,7 +108,21 @@
         showSection('datadownload');
       });
 
-      // Add your AJAX code for executing the backtest here
-    </script>
-  </body>
-</html>
+      $('#configuration-btn').click(function() {
+        showSection('configuration');
+      });
+
+      $('#help-btn').click(function() {
+        showSection('help');
+      });
+
+      $('#test-btn').click(function() {
+        showSection('test');
+      });
+
+      $('#logs-btn').click(function() {
+        showSection('logs');
+      });
+      </script>
+      </body>
+      </html>

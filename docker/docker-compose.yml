@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  freqinsight:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./user_data:/app/user_data

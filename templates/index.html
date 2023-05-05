@@ -136,13 +136,12 @@
       $('#test-section-button').click(function() {
         $.post('/test')
           .done(function(data) {
-            $('#test-result').text(data);
+            $('#test-result').text(data.output);
           })
           .fail(function(jqXHR, textStatus, errorThrown) {
             $('#test-result').text('Error: ' + errorThrown);
           });
       });
-
       $('#logs-btn').click(function() {
         showSection('logs');
       });

@@ -4,14 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My First Flask Project</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+
   </head>
   <body>
+
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -37,7 +42,7 @@
                 <a class="nav-link" href="#" id="help-btn">Help</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" id="test-btn">Test</a>
+                <button class="nav-link btn btn-primary" id="test-btn">Test</button>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" id="logs-btn">Logs</a>
@@ -46,9 +51,9 @@
           </div>
         </div>
       </nav>
-      </header>
+    </header>
 
-      <main class="container">
+    <main class="container">
       <div id="backtest" class="section">
         <h2>Backtest</h2>
         <!-- Your Backtest content here -->
@@ -76,16 +81,17 @@
 
       <div id="test" class="section">
         <h2>Test</h2>
-        <!-- Your Test content here -->
+        <button id="test-section-button" style="display:none;">Test</button>
+        <p id="test-result"></p>
       </div>
-
       <div id="logs" class="section">
         <h2>Logs</h2>
         <!-- Your Logs content here -->
       </div>
-      </main>
 
-      <script>
+    </main>
+
+    <script>
       // Hide all sections except the first one
       $(".section:not(:first)").hide();
 
@@ -117,12 +123,31 @@
       });
 
       $('#test-btn').click(function() {
+        // Hide the "Test" button in the navbar
+        $(this).hide();
+
+        // Show the "Test" button in the "Test" section
+        $('#test-section-button').show();
+
+        // Show the "Test" section
         showSection('test');
+      });
+
+      $('#test-section-button').click(function() {
+        $.post('/test')
+          .done(function(data) {
+            $('#test-result').text(data);
+          })
+          .fail(function(jqXHR, textStatus, errorThrown) {
+            $('#test-result').text('Error: ' + errorThrown);
+          });
       });
 
       $('#logs-btn').click(function() {
         showSection('logs');
       });
-      </script>
-      </body>
-      </html>
+
+    </script>
+
+  </body>
+</html>

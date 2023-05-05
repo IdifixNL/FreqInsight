@@ -1,6 +1,7 @@
 # Import the necessary libraries
 import subprocess
-from flask import Flask, render_template, request, jsonify
+import json
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 
 # Create the Flask application
 app = Flask(__name__)
@@ -15,36 +16,13 @@ def home(message=None, output=None):
 def about():
     return "This is the About page."
 
-# Define the route for the backtest
-@app.route('/backtest', methods=['POST'])
-def backtest():
-    # Define the command and working directory
-    command = "docker-compose up -d"
-    working_directory = "/home/nico/Documents/projects/trader/dev-freq/ft_userdata"
+import json
 
-    # Run the command and capture the output
-    try:
-        result = subprocess.run(
-            command.split(),
-            cwd=working_directory,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        message = "Docker Compose command executed successfully."
-        output = result.stdout.decode('utf-8')
-    except subprocess.CalledProcessError as e:
-        message = "An error occurred while executing the Docker Compose command."
-        output = e.stderr.decode('utf-8')
-
-    return render_template('index.html', message=message, output=output)
-
-# Define the route for the test
 @app.route('/test', methods=['POST'])
 def test():
     # Define the command and working directory
-    command = "docker ps"  # Change this line to your desired command
-    working_directory = "/home/nico"
+    command = "docker compose ps --format json"
+    working_directory = "/home/nico/Documents/projects/trader/dev-freq/ft_userdata"
 
     # Run the command and capture the output
     try:
@@ -61,7 +39,20 @@ def test():
         message = "An error occurred while executing the Test command."
         output = e.stderr.decode('utf-8')
 
-    return jsonify({"message": message, "output": output})
+    # Parse the JSON output and extract the desired information
+    try:
+        containers = json.loads(output)
+        freqtrade_info = ""
+        for container in containers:
+            if container["Name"] == "freqtrade":
+                freqtrade_info = f'Name: {container["Name"]}\nState: {container["State"]}'
+                break
+    except json.JSONDecodeError:
+        freqtrade_info = f"Error: Invalid JSON output.\nRaw output: {output}"
+
+    return {'message': message, 'output': freqtrade_info}
+
+
 
 # Run the application
 if __name__ == '__main__':

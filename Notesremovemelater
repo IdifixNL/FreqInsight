@@ -1,0 +1,3 @@
+Works fo ubuntu
+
+docker run -it --net=host freqinsight

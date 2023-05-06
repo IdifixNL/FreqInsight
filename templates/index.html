@@ -136,12 +136,15 @@ $('#test-btn').click(function() {
 $('#test-section-button').click(function() {
   $.post('/test')
     .done(function(data) {
-      $('#test-result').text("Message: " + data.message + "\nOutput: " + data.output);
+      $('#test-result').text("Message: " + data.message + "\nName: " + data.name + "\nState: " + data.state);
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
       $('#test-result').text('Error: ' + errorThrown);
     });
 });
+
+
+
 
 $('#logs-btn').click(function() {
   showSection('logs');

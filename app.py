@@ -16,8 +16,6 @@ def home(message=None, output=None):
 def about():
     return "This is the About page."
 
-import json
-
 @app.route('/test', methods=['POST'])
 def test():
     # Define the command and working directory
@@ -42,17 +40,18 @@ def test():
     # Parse the JSON output and extract the desired information
     try:
         containers = json.loads(output)
-        freqtrade_info = ""
+        name = ""
+        state = ""
         for container in containers:
             if container["Name"] == "freqtrade":
-                freqtrade_info = f'Name: {container["Name"]}\nState: {container["State"]}'
+                name = container["Name"]
+                state = container["State"]
                 break
     except json.JSONDecodeError:
-        freqtrade_info = f"Error: Invalid JSON output.\nRaw output: {output}"
+        name = "Error"
+        state = "Invalid JSON output. Raw output: " + output
 
-    return {'message': message, 'output': freqtrade_info}
-
-
+    return {'message': message, 'name': name, 'state': state, 'raw_output': output}
 
 # Run the application
 if __name__ == '__main__':

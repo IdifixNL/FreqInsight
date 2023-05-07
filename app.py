@@ -1,54 +1,14 @@
-import subprocess
-import json
-from flask import Flask, render_template, request, jsonify
+# app.py
 
-# Create the Flask application
+from flask import Flask, render_template
+from routes import main_bp
+
 app = Flask(__name__)
+app.register_blueprint(main_bp)
 
 @app.route('/')
 def home(message=None, output=None):
     return render_template('index.html', message=message, output=output)
-
-@app.route('/about')
-def about():
-    return "This is the About page."
-
-@app.route('/test', methods=['POST'])
-def test():
-    # Define the command and working directory
-    command = "docker compose ps --format json"
-    working_directory = "/home/nico/Documents/projects/trader/dev-freq/ft_userdata"
-
-    # Run the command and capture the output
-    try:
-        result = subprocess.run(
-            command.split(),
-            cwd=working_directory,
-            check=True,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-        )
-        message = "Test command executed successfully."
-        output = result.stdout.decode('utf-8')
-    except subprocess.CalledProcessError as e:
-        message = "An error occurred while executing the Test command."
-        output = e.stderr.decode('utf-8')
-
-    # Parse the JSON output and extract the desired information
-    try:
-        containers = json.loads(output)
-        name = ""
-        state = ""
-        for container in containers:
-            if container["Name"] == "freqtrade":
-                name = container["Name"]
-                state = container["State"]
-                break
-    except json.JSONDecodeError:
-        name = "Error"
-        state = "Invalid JSON output. Raw output: " + output
-
-    return {'message': message, 'name': name, 'state': state, 'raw_output': output}
 
 if __name__ == '__main__':
     app.run(debug=True)

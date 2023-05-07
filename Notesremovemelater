@@ -6,9 +6,34 @@ docker run -it --net=host freqinsight
 Sketch for logic split of directory structure
 
 
-New old 
+Current
+FreqInsight/
+│
+├── config/
+│   ├── config.ini
+│
+├── static/
+│   ├── css/
+│   │   └── main.css
+│   └── js/
+│       └── main.js
+│
+├── templates/
+│   ├── base.html
+│   ├── navbar.html
+│   ├── configuration.html
+│   ├── help.html
+│   ├── test.html
+│   └── index.html
+│
+└── app.py
 
-Plan
+
+
+
+
+
+Old
 2023-05-07
 
 FreqInsight/
@@ -22,13 +47,9 @@ FreqInsight/
 ├── templates/
 │   ├── base.html
 │   ├── navbar.html
-│   ├── backtest.html
-│   ├── hyperopt.html
-│   ├── datadownload.html
 │   ├── configuration.html
 │   ├── help.html
 │   ├── test.html
-│   ├── logs.html
 │   └── index.html
 │
 └── app.py

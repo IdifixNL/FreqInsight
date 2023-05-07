@@ -30,11 +30,11 @@ $(document).ready(function() {
   });
 
   $('#test-btn').click(function() {
-    // Show the "Test" button in the "Test" section
-    $('#test-section-button').show();
-
     // Show the "Test" section
     showSection('test');
+    
+    // Hide the "Test" button in the "Test" section
+    $('#test-section-button').hide();
   });
 
   $('#test-section-button').click(function() {
@@ -57,6 +57,11 @@ $(document).ready(function() {
             $('#logs-content').text('Error: ' + errorThrown);
             showSection('logs');
         });
+  });
+
+  // Add event listener for help section button
+  $('#help-section-button').click(function() {
+    alert('You clicked the button in the help section!');
   });
 
   showSection('configuration');

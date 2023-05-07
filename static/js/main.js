@@ -21,20 +21,8 @@ $(document).ready(function() {
     showSection('datadownload');
   });
 
-  $('#configuration-btn').click(function() {
-    showSection('configuration');
-  });
-
-  $('#help-btn').click(function() {
-    showSection('help');
-  });
-
   $('#test-btn').click(function() {
-    // Show the "Test" section
     showSection('test');
-    
-    // Hide the "Test" button in the "Test" section
-    $('#test-section-button').hide();
   });
 
   $('#test-section-button').click(function() {
@@ -45,6 +33,14 @@ $(document).ready(function() {
         .fail(function(jqXHR, textStatus, errorThrown) {
             $('#test-result').text('Error: ' + errorThrown);
         });
+  });
+
+  $('#configuration-btn').click(function() {
+    showSection('configuration');
+  });
+
+  $('#help-btn').click(function() {
+    showSection('help');
   });
 
   $('#logs-btn').click(function() {

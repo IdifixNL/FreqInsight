@@ -27,12 +27,15 @@ $(document).ready(function() {
 
   $('#test-section-button').click(function() {
     $.post('/test')
-        .done(function(data) {
-            $('#test-result').text("Message: " + data.message + "\nName: " + data.name + "\nState: " + data.state);
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            $('#test-result').text('Error: ' + errorThrown);
-        });
+      .done(function(data) {
+        var output = JSON.parse(data.raw_output);
+        var status = output[0].Status;
+        var state = output[0].State;
+        $('#test-result').text("Status: " + status + "\nState: " + state);
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        $('#test-result').text('Error: ' + errorThrown);
+      });
   });
 
   $('#configuration-btn').click(function() {

@@ -10,18 +10,26 @@ $(document).ready(function() {
 
   // Event listeners for menu buttons
   $('#backtest-btn').click(function() {
+    $('.nav-btn').removeClass('active');
+    $(this).addClass('active');
     showSection('backtest');
   });
 
   $('#hyperopt-btn').click(function() {
+    $('.nav-btn').removeClass('active');
+    $(this).addClass('active');
     showSection('hyperopt');
   });
 
   $('#datadownload-btn').click(function() {
+    $('.nav-btn').removeClass('active');
+    $(this).addClass('active');
     showSection('datadownload');
   });
 
   $('#test-btn').click(function() {
+    $('.nav-btn').removeClass('active');
+    $(this).addClass('active');
     showSection('test');
   });
 
@@ -39,10 +47,14 @@ $(document).ready(function() {
   });
 
   $('#configuration-btn').click(function() {
+    $('.nav-btn').removeClass('active');
+    $(this).addClass('active');
     showSection('configuration');
   });
 
   $('#help-btn').click(function() {
+    $('.nav-btn').removeClass('active');
+    $(this).addClass('active');
     showSection('help');
   });
 

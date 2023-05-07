@@ -1,5 +1,5 @@
 # app.py
-
+from config import __init__
 from flask import Flask, render_template
 from routes import main_bp
 
@@ -12,3 +12,5 @@ def home(message=None, output=None):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+

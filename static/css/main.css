@@ -1,0 +1,41 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styles */
+header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+}
+
+header h1 {
+  margin: 0;
+}
+
+/* Main content styles */
+main {
+  padding: 2rem;
+}
+
+/* Section styles */
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  margin-bottom: 1rem;
+}
+
+header {
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/* body {
+  background-color: red !important;
+} */

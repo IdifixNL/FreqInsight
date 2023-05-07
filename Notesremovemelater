@@ -1,3 +1,22 @@
 Works fo ubuntu
 
 docker run -it --net=host freqinsight
+
+
+Sketch for logic split of directory structure
+
+
+New
+
+FreqInsight/
+│
+├── static/
+│   ├── css/
+│   │   └── main.css
+│   └── js/
+│       └── main.js
+│
+├── templates/
+│   └── index.html
+│
+└── app.py

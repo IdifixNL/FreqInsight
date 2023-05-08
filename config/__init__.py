@@ -14,5 +14,5 @@ config = configparser.ConfigParser()
 config.read(config_path)
 
 freqtrade_config_path = config.get('Settings', 'freqtrade_config_path')
-
-
+user_data_path = config.get('Settings', 'user_data_path')
+strategies_path = config.get('Settings', 'strategies_path')

@@ -1,38 +1,65 @@
-import configparser
-import os
-from flask import Blueprint, render_template, request
+{% extends "base.html" %}
 
-profile_bp = Blueprint('profile', __name__)
+{% block content %}
 
-# Get the path of the config file
-config_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', 'config.ini')
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="mt-5">Server Profile Configuration</h1>
+      <form id="profile-form">
+        <div class="form-group">
+          <label for="servername">Server Name:</label>
+          <input type="text" class="form-control" id="servername" name="servername">
+        </div>
+        <div class="form-group">
+          <label for="freqtrade_config_path">Freqtrade Config Path:</label>
+          <input type="text" class="form-control" id="freqtrade_config_path" name="freqtrade_config_path">
+        </div>
+        <div class="form-group">
+          <label for="user_data_path">User Data Path:</label>
+          <input type="text" class="form-control" id="user_data_path" name="user_data_path">
+        </div>
+        <div class="form-group">
+          <label for="strategies_path">Strategies Path:</label>
+          <input type="text" class="form-control" id="strategies_path" name="strategies_path">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
 
+<script>
+  document.querySelector("form").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-@profile_bp.route('/configuration')
-def configuration():
-    return render_template('configuration.html')
+    // Collect form data
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
 
+    // Send form data as JSON to the server
+    fetch("{{ url_for('profile_bp.profiles_form') }}", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok: " + response.status + " " + response.statusText);
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.result === "success") {
+        console.log("Form submitted successfully");
+      }
+    })
+    .catch(error => {
+      console.error("Error submitting form:", error);
+    });
+  });
+</script>
 
-@profile_bp.route('/profiles', methods=['POST'])
-def profiles_form():
-    # Get the form data
-    servername = request.form.get('servername')
-    freqtrade_config_path = request.form.get('freqtrade_config_path')
-    user_data_path = request.form.get('user_data_path')
-    strategies_path = request.form.get('strategies_path')
-
-    # Create a ConfigParser object and add the values to the 'Profile' section
-    config = configparser.ConfigParser()
-    config.read(config_path)
-    section_name = 'Profile' + str(len(config.sections()) + 1)
-    config.add_section(section_name)
-    config.set(section_name, 'servername', servername)
-    config.set(section_name, 'freqtrade_config_path', freqtrade_config_path)
-    config.set(section_name, 'user_data_path', user_data_path)
-    config.set(section_name, 'strategies_path', strategies_path)
-
-    # Write the changes to the config file
-    with open(config_path, 'w') as config_file:
-        config.write(config_file)
-
-    return {'result': 'success'}
+{% endblock %}

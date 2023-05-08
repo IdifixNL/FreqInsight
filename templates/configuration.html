@@ -1,68 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="mt-5">Server Profile Configuration</h1>
-      <form id="profile-form">
-        <div class="form-group">
-          <label for="servername">Server Name:</label>
-          <input type="text" class="form-control" id="servername" name="servername">
-        </div>
-        <div class="form-group">
-          <label for="freqtrade_config_path">Freqtrade Config Path:</label>
-          <input type="text" class="form-control" id="freqtrade_config_path" name="freqtrade_config_path">
-        </div>
-        <div class="form-group">
-          <label for="user_data_path">User Data Path:</label>
-          <input type="text" class="form-control" id="user_data_path" name="user_data_path">
-        </div>
-        <div class="form-group">
-          <label for="strategies_path">Strategies Path:</label>
-          <input type="text" class="form-control" id="strategies_path" name="strategies_path">
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-      </form>
+    <div class="container">
+        <h1>Configuration</h1>
+        <form>
+            <div class="form-group">
+                <label for="symbol">Symbol</label>
+                <input type="text" class="form-control" id="symbol" name="symbol" value="{{ symbol }}">
+            </div>
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" value="{{ start_date }}">
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ end_date }}">
+            </div>
+            <div class="form-group">
+                <label for="freq">Frequency</label>
+                <select class="form-control" id="freq" name="freq">
+                    <option value="D" {% if freq == 'D' %} selected {% endif %}>Daily</option>
+                    <option value="W" {% if freq == 'W' %} selected {% endif %}>Weekly</option>
+                    <option value="M" {% if freq == 'M' %} selected {% endif %}>Monthly</option>
+                    <option value="Q" {% if freq == 'Q' %} selected {% endif %}>Quarterly</option>
+                    <option value="Y" {% if freq == 'Y' %} selected {% endif %}>Yearly</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ma_window">Moving Average Window</label>
+                <input type="number" class="form-control" id="ma_window" name="ma_window" value="{{ ma_window }}">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="submitForm()">Save</button>
+        </form>
     </div>
-  </div>
-</div>
 
-<script>
-  document.querySelector("form").addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    // Collect form data
-    const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
-
-    // Send form data as JSON to the server
-    fetch("{{ url_for('main.test.test') }}", {
-
-
-    
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok: " + response.status + " " + response.statusText);
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data.result === "success") {
-        console.log("Form submitted successfully");
-      }
-    })
-    .catch(error => {
-      console.error("Error submitting form:", error);
-    });
-  });
-</script>
-
+    <script>
+        function submitForm() {
+            fetch("{{ url_for('main.test.test') }}", {
+                method: 'POST',
+                body: new FormData(document.querySelector('form'))
+            }).then(response => {
+                if (response.ok) {
+                    alert('Form data successfully saved!');
+                } else {
+                    alert('Error saving form data!');
+                }
+            }).catch(error => {
+                console.error('Error saving form data:', error);
+                alert('Error saving form data!');
+            });
+        }
+    </script>
 {% endblock %}

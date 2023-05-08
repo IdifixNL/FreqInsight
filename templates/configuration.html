@@ -38,7 +38,8 @@
     const data = Object.fromEntries(formData.entries());
 
     // Send form data as JSON to the server
-    fetch("{{ url_for('main.test') }}", {
+    fetch("{{ url_for('main.test.test') }}", {
+
 
     
       method: "POST",

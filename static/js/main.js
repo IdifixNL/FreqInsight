@@ -75,5 +75,37 @@ $(document).ready(function() {
     alert('You clicked the button in the help section!');
   });
 
+  // Show the configuration section when the link is clicked
+  $('#configuration-link').click(function() {
+    showSection('configuration');
+  });
+
+  // Submit the configuration form
+  $('#profile-form').submit(function(event) {
+    event.preventDefault();
+
+    // Collect form data
+    var formData = {
+      'servername': $('#servername').val(),
+      'freqtrade_config_path': $('#freqtrade_config_path').val(),
+      'user_data_path': $('#user_data_path').val(),
+      'strategies_path': $('#strategies_path').val()
+    };
+
+    // Send form data as JSON to the server
+    $.ajax({
+      type: 'POST',
+      url: '/profile',
+      data: JSON.stringify(formData),
+      contentType: 'application/json',
+      success: function(data) {
+        console.log('Form submitted successfully:', data);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error('Error submitting form:', errorThrown);
+      }
+    });
+  });
+
   showSection('configuration');
 });

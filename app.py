@@ -1,11 +1,13 @@
-# app.py
-from config import __init__
-from flask import Flask, render_template
 from routes import main_bp
-from flask import request
+from routes.profile import profile_bp
+from flask import Flask, render_template
+import configparser
 
 app = Flask(__name__)
+app.config['CONFIG_PATH'] = '/home/nico/Documents/projects/trader/FreqInsight/config/config.ini'
+
 app.register_blueprint(main_bp)
+app.register_blueprint(profile_bp)
 
 @app.route('/')
 def home(message=None, output=None):
@@ -13,12 +15,3 @@ def home(message=None, output=None):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-@app.route('/profile', methods=['POST'])
-def profile():
-    data = request.form['data']
-    # process data here
-    return 'Profile endpoint'

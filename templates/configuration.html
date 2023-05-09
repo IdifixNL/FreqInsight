@@ -1,54 +1,68 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <div class="container">
-        <h1>Configuration</h1>
-        <form>
-            <div class="form-group">
-                <label for="symbol">Symbol</label>
-                <input type="text" class="form-control" id="symbol" name="symbol" value="{{ symbol }}">
-            </div>
-            <div class="form-group">
-                <label for="start_date">Start Date</label>
-                <input type="date" class="form-control" id="start_date" name="start_date" value="{{ start_date }}">
-            </div>
-            <div class="form-group">
-                <label for="end_date">End Date</label>
-                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ end_date }}">
-            </div>
-            <div class="form-group">
-                <label for="freq">Frequency</label>
-                <select class="form-control" id="freq" name="freq">
-                    <option value="D" {% if freq == 'D' %} selected {% endif %}>Daily</option>
-                    <option value="W" {% if freq == 'W' %} selected {% endif %}>Weekly</option>
-                    <option value="M" {% if freq == 'M' %} selected {% endif %}>Monthly</option>
-                    <option value="Q" {% if freq == 'Q' %} selected {% endif %}>Quarterly</option>
-                    <option value="Y" {% if freq == 'Y' %} selected {% endif %}>Yearly</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="ma_window">Moving Average Window</label>
-                <input type="number" class="form-control" id="ma_window" name="ma_window" value="{{ ma_window }}">
-            </div>
-            <button type="submit" class="btn btn-primary" onclick="submitForm()">Save</button>
-        </form>
+  <h1>Configuration</h1>
+
+  <form id="config-form">
+    <div class="form-group">
+      <label for="freqtrade_config_path">Freqtrade Config Path:</label>
+      <input type="text" class="form-control" id="freqtrade_config_path" name="freqtrade_config_path" value="{{ freqtrade_config_path }}">
     </div>
 
-    <script>
-        function submitForm() {
-            fetch("{{ url_for('main.test.test') }}", {
-                method: 'POST',
-                body: new FormData(document.querySelector('form'))
-            }).then(response => {
-                if (response.ok) {
-                    alert('Form data successfully saved!');
-                } else {
-                    alert('Error saving form data!');
-                }
-            }).catch(error => {
-                console.error('Error saving form data:', error);
-                alert('Error saving form data!');
-            });
+    <div class="form-group">
+      <label for="user_data_path">User Data Path:</label>
+      <input type="text" class="form-control" id="user_data_path" name="user_data_path" value="{{ user_data_path }}">
+    </div>
+
+    <div class="form-group">
+      <label for="strategies_path">Strategies Path:</label>
+      <input type="text" class="form-control" id="strategies_path" name="strategies_path" value="{{ strategies_path }}">
+    </div>
+
+    <div class="form-group">
+      <label for="servername">Servername:</label>
+      <input type="text" class="form-control" id="servername" name="servername" value="{{ servername }}">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const configForm = document.getElementById("config-form");
+      configForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const formData = new FormData(configForm);
+        const data = {};
+        for (const [key, value] of formData.entries()) {
+          data[key] = value;
         }
-    </script>
+        console.log('Form data:', data);
+        fetch('/profile/', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          alert('Configuration saved successfully!');
+        })
+        .catch(error => {
+          console.error('Error submitting form:', error);
+          alert('Error submitting form: ' + error.message);
+        });
+      });
+    });
+  </script>
 {% endblock %}

@@ -1,38 +1,50 @@
-import configparser
 import os
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
+import configparser
 
 profile_bp = Blueprint('profile', __name__)
 
-# Get the path of the config file
-config_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '..', 'config.ini')
-
-
-@profile_bp.route('/configuration')
+@profile_bp.route('/profile/', methods=['GET', 'POST'])
 def configuration():
-    return render_template('configuration.html')
+    # Get the current directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
 
+    # Construct the path to the config.ini file
+    config_path = os.path.join(current_dir, '..', 'config', 'config.ini')
 
-@profile_bp.route('/profiles', methods=['POST'])
-def profiles_form():
-    # Get the form data
-    servername = request.form.get('servername')
-    freqtrade_config_path = request.form.get('freqtrade_config_path')
-    user_data_path = request.form.get('user_data_path')
-    strategies_path = request.form.get('strategies_path')
-
-    # Create a ConfigParser object and add the values to the 'Profile' section
     config = configparser.ConfigParser()
     config.read(config_path)
-    section_name = 'Profile' + str(len(config.sections()) + 1)
-    config.add_section(section_name)
-    config.set(section_name, 'servername', servername)
-    config.set(section_name, 'freqtrade_config_path', freqtrade_config_path)
-    config.set(section_name, 'user_data_path', user_data_path)
-    config.set(section_name, 'strategies_path', strategies_path)
 
-    # Write the changes to the config file
-    with open(config_path, 'w') as config_file:
-        config.write(config_file)
+    if 'FREQTRADE' not in config:
+        config['FREQTRADE'] = {}
+    if 'SERVER' not in config:
+        config['SERVER'] = {}
 
-    return {'result': 'success'}
+    if request.method == 'POST':
+        data = request.get_json()
+        config['FREQTRADE']['freqtrade_config_path'] = data.get('freqtrade_config_path', '')
+        config['FREQTRADE']['user_data_path'] = data.get('user_data_path', '')
+        config['FREQTRADE']['strategies_path'] = data.get('strategies_path', '')
+        config['SERVER']['servername'] = data.get('servername', '')
+        with open(config_path, 'w') as configfile:
+            config.write(configfile)
+        print('Config saved successfully.')
+        print('freqtrade_config_path:', data.get('freqtrade_config_path', ''))
+        print('user_data_path:', data.get('user_data_path', ''))
+        print('strategies_path:', data.get('strategies_path', ''))
+        print('servername:', data.get('servername', ''))
+        return jsonify({"message": "Configuration saved successfully!"})
+
+    freqtrade_config_path = config['FREQTRADE'].get('freqtrade_config_path', '')
+    user_data_path = config['FREQTRADE'].get('user_data_path', '')
+    strategies_path = config['FREQTRADE'].get('strategies_path', '')
+    servername = config['SERVER'].get('servername', '')
+    
+    print('freqtrade_config_path:', freqtrade_config_path)
+    print('user_data_path:', user_data_path)
+    print('strategies_path:', strategies_path)
+    print('servername:', servername)
+
+    return render_template('configuration.html', freqtrade_config_path=freqtrade_config_path,
+                           user_data_path=user_data_path, strategies_path=strategies_path,
+                           servername=servername)

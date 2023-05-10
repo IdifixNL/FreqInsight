@@ -33,23 +33,16 @@ $(document).ready(function() {
     showSection('test');
   });
 
-  $('#test-section-button').click(function() {
-    $.post('/test')
-      .done(function(data) {
-        var output = JSON.parse(data.raw_output);
-        var status = output[0].Status;
-        var state = output[0].State;
-        $('#test-result').text("Status: " + status + "\nState: " + state);
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        $('#test-result').text('Error: ' + errorThrown);
-      });
-  });
-
   $('#configuration-btn').click(function() {
     $('.nav-btn').removeClass('active');
     $(this).addClass('active');
     showSection('configuration');
+
+    // Check if the current path matches the configuration path
+    if (window.location.pathname === '/config/') {
+      // Reload the page to render the configuration form
+      window.location.reload();
+    }
   });
 
   $('#help-btn').click(function() {

@@ -1,60 +1,16 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% extends 'base.html' %}
     <title>My First Flask Project</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-
     <!-- Custom JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
   </head>
   <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">FreqInsight</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="backtest-btn">Backtest</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="hyperopt-btn">Hyperopt</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="datadownload-btn">Datadownload</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="configuration-btn">Configuration</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="help-btn">Help</a>
-            </li>
-            <li class="nav-item">
-              <a a class="nav-link" href="#" id="test-btn">Test</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#" id="logs-btn">Logs</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
     <main class="container">
+      {% block content %}
       {% include 'configuration.html' %}
       <div id="help" class="section" style="display:none;">
         <h2>Help Section</h2>
@@ -67,7 +23,7 @@
         <button id="test-section-button" class="btn btn-primary">Test Button in Test Section</button>
         <div id="test-result"></div>
       </div>
+      {% endblock %}
     </main>
-
   </body>
 </html>

@@ -11,7 +11,7 @@ def configuration():
 
     # Construct the path to the config.ini file
     config_path = os.path.join(current_dir, '..', 'config', 'config.ini')
-
+    
     config = configparser.ConfigParser()
     config.read(config_path)
 

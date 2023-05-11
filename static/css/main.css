@@ -1,0 +1,53 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Header styles */
+header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+}
+
+header h1 {
+  margin: 0;
+}
+
+/* Main content styles */
+main {
+  padding: 2rem;
+}
+
+/* Section styles */
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  margin-bottom: 1rem;
+}
+
+header {
+  margin: 0;
+  padding: 0;
+}
+
+button:focus {
+  outline: none;
+}
+
+.navbar-nav .active > .nav-link {
+  background-color: blue;
+  color: white;
+}
+
+.nav-link:focus, .nav-link:hover {
+  color: white;
+  background-color: #6c757d;
+}
+
+.navbar-dark .navbar-nav .nav-link.active:focus, .navbar-dark .navbar-nav .nav-link.active:hover {
+  background-color: #0d6efd;
+}

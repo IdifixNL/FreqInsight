@@ -45,18 +45,21 @@ $(document).ready(function() {
     }
   });
 
+  $('#download-form').submit(function(e) {
+    e.preventDefault();
 
-  $('#download-btn').click(function() {
-    $.post('/download_data')
-        .done(function(data) {
-            alert('Data download command executed successfully. Output: ' + data.message);
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            alert('Error executing data download command: ' + errorThrown);
-        });
-});
+    // Get the selected number of days
+    var daysBack = $('#days-back').val();
 
-
+    // Make the data download request
+    $.post('/download_data', { days: daysBack })
+      .done(function(data) {
+        alert('Data download command executed successfully. Output: ' + data.message);
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        alert('Error executing data download command: ' + errorThrown);
+      });
+  });
 
   $('#help-btn').click(function() {
     $('.nav-btn').removeClass('active');
@@ -66,14 +69,14 @@ $(document).ready(function() {
 
   $('#logs-btn').click(function() {
     $.get('/logs')
-        .done(function(data) {
-            $('#logs-content').html(data);
-            showSection('logs');
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-            $('#logs-content').text('Error: ' + errorThrown);
-            showSection('logs');
-        });
+      .done(function(data) {
+        $('#logs-content').html(data);
+        showSection('logs');
+      })
+      .fail(function(jqXHR, textStatus, errorThrown) {
+        $('#logs-content').text('Error: ' + errorThrown);
+        showSection('logs');
+      });
   });
 
   // Add event listener for help section button

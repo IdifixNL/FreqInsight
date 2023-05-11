@@ -11,7 +11,8 @@ user_data_path = config.get('FREQTRADE', 'user_data_path')
 
 @data_download_bp.route('/download_data', methods=['POST'])
 def download_data():
-    command = ['docker', 'compose', 'run', 'freqtrade', 'download-data', '--days', '60', '-t', '1d']
+    days = request.form.get('days')  # Retrieve the number of days from the form data
+    command = ['docker', 'compose', 'run', 'freqtrade', 'download-data', '--days', days, '-t', '1d']
     cwd = user_data_path
     process = subprocess.Popen(command, stdout=subprocess.PIPE, cwd=cwd)
     output, error = process.communicate()

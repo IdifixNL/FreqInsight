@@ -45,6 +45,19 @@ $(document).ready(function() {
     }
   });
 
+
+  $('#download-btn').click(function() {
+    $.post('/download_data')
+        .done(function(data) {
+            alert('Data download command executed successfully. Output: ' + data.message);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            alert('Error executing data download command: ' + errorThrown);
+        });
+});
+
+
+
   $('#help-btn').click(function() {
     $('.nav-btn').removeClass('active');
     $(this).addClass('active');

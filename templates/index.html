@@ -12,6 +12,7 @@
     <main class="container">
       {% block content %}
       {% include 'configuration.html' %}
+      {% include 'datadownload.html' %}
       <div id="help" class="section" style="display:none;">
         <h2>Help Section</h2>
         <p>This is the help section.</p>
@@ -22,7 +23,7 @@
         <p>This is the test section.</p>
         <button id="test-section-button" class="btn btn-primary">Test Button in Test Section</button>
         <div id="test-result"></div>
-      </div>
+
       {% endblock %}
     </main>
   </body>

@@ -6,7 +6,57 @@ docker run -it --net=host freqinsight
 Sketch for logic split of directory structure
 
 
+
+
+[Settings]
+freqtrade_config_path = /path/to/freqtrade/config.json
+
+[FREQTRADE]
+freqtrade_config_path = /home/nico/Documents/projects/trader/dev-freq/ft_userdata/user_data/config.json
+user_data_path = /home/nico/Documents/projects/trader/dev-freq/ft_userdata/user_data/
+strategies_path = /home/nico/Documents/projects/trader/dev-freq/ft_userdata/user_data/strategies
+
+[SERVER]
+servername = bot01
+
+
+
 Current
+FreqInsight/
+│
+├── config/
+│   ├── config.ini
+│   ├── __init__.py
+│ 
+├── static/
+│   ├── css/
+│   │   └── main.css
+│   └── js/
+│       └── main.js
+│
+├── templates/
+│   ├── base.html
+│   ├── navbar.html
+│   ├── configuration.html
+│   ├── help.html
+│   ├── test.html
+│   ├── datadownload.html
+│   └── index.html
+│
+├── routes/
+│   ├── __init__.py
+│   ├── about.py
+│   ├── test.py
+│   ├── data_download.py
+│   ├── profile.py
+
+└── app.py
+
+
+
+
+
+Old
 FreqInsight/
 │
 ├── config/

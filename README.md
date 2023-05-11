@@ -60,6 +60,7 @@ To install and use FreqInsight, follow these steps:
 
 ## Usage
 
+
 1. Open a terminal
 
 2. Navigate to the FreqInsight directory.
@@ -72,6 +73,7 @@ To install and use FreqInsight, follow these steps:
 
 6. Fill in User Data Path from where your Freqtrade docker location and press Save
 
+7. FOR NOW ONLY DATADOWNLOAD section works.
 
 ## Contributing
 

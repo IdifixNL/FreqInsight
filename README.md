@@ -3,7 +3,7 @@
  FreqInsight is provided under the MIT License and comes with no warranty or guarantee of any kind. The user assumes all responsibility for the usage of this software and the results obtained from it. Always backtest your trading strategies thoroughly before using them with real money.
 
 
-This application is under development active development
+This application is under active development.
 
 # FreqInsight
 

@@ -51,14 +51,26 @@ $(document).ready(function() {
     // Get the selected number of days
     var daysBack = $('#days-back').val();
 
+    // Get all selected time frames
+    var timeFrames = [];
+    $("input:checkbox[name='time_frames']:checked").each(function() {
+      timeFrames.push($(this).val());
+    });
+
     // Make the data download request
-    $.post('/download_data', { days: daysBack })
-      .done(function(data) {
-        alert('Data download command executed successfully. Output: ' + data.message);
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
+    $.ajax({
+      url: '/download_data',
+      type: 'POST',
+      contentType: 'application/json', // Specify that we're sending JSON
+      data: JSON.stringify({ days: daysBack, time_frames: timeFrames }), // Convert the data to a JSON string
+      dataType: 'json', // Expect a JSON response
+      success: function(data) {
+        alert('Data download command executed successfully. Output: ' + JSON.stringify(data));
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
         alert('Error executing data download command: ' + errorThrown);
-      });
+      }
+    });
   });
 
   $('#help-btn').click(function() {
@@ -82,6 +94,12 @@ $(document).ready(function() {
   // Add event listener for help section button
   $('#help-section-button').click(function() {
     alert('You clicked the button in the help section!');
+  });
+
+  // Event listener for "Select All" checkbox
+  $('#select-all').change(function() {
+    var isChecked = $(this).prop('checked');
+    $('input[name="time_frames"]').prop('checked', isChecked);
   });
 
   showSection('configuration');

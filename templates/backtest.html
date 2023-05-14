@@ -1,0 +1,13 @@
+<div id="backtest" class="section">
+    <h2>Backtest</h2>
+    <form id="backtest-form">
+      <label for="strategy-select">Select strategy:</label>
+      <select id="strategy-select" name="strategy-select">
+        {% for name in strategy_names %}
+        <option value="{{ name }}">{{ name }}</option>
+        {% endfor %}
+      </select>
+  
+      <input type="submit" value="Backtest">
+    </form>
+</div>

@@ -41,6 +41,7 @@ FreqInsight/
 │   ├── help.html
 │   ├── test.html
 │   ├── datadownload.html
+│   └── backtest.html
 │   └── index.html
 │
 ├── routes/
@@ -48,6 +49,7 @@ FreqInsight/
 │   ├── about.py
 │   ├── test.py
 │   ├── data_download.py
+│   ├── backtest.py
 │   ├── profile.py
 
 └── app.py

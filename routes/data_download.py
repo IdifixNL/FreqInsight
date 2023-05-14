@@ -5,6 +5,7 @@ import configparser
 
 data_download_bp = Blueprint('data_download', __name__)
 
+# Read the config.ini file
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 user_data_path = config.get('FREQTRADE', 'user_data_path')

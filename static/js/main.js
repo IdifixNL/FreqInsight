@@ -109,21 +109,26 @@ $(document).ready(function() {
 
   $('#backtest-form').submit(function(e) {
     e.preventDefault();
-
+  
     var selectedStrategy = $('#strategy-select').val();
     var timeFrames = [];
     $("input:checkbox[name='time_frames']:checked").each(function() {
       timeFrames.push($(this).val());
     });
-
-    $.post('/run_backtest', { 'strategy-select': selectedStrategy, 'time_frames': timeFrames })
+  
+    var timerange = $('#timerange').val();
+  
+    $.post('/run_backtest', { 'strategy-select': selectedStrategy, 'time_frames[]': timeFrames, 'timerange': timerange })
       .done(function(data) {
         alert('Backtest command executed successfully. Result: ' + data.result);
       })
       .fail(function(jqXHR, textStatus, errorThrown) {
         alert('Error executing backtest command: ' + errorThrown);
       });
-
+  
     return false; // Prevent default form submission behavior
   });
-});  // This is the closing for $(document).ready
+  
+
+  // ...
+});

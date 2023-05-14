@@ -39,6 +39,9 @@
     <label for="3d">3 days</label><br>
     <input type="checkbox" id="1w" name="time_frames" value="1w">
     <label for="1w">1 week</label><br>
+    
+    <label for="timerange">Timerange:</label>
+    <input type="text" id="timerange" name="timerange"><br>
 
     <input type="submit" value="Backtest">
   </form>
@@ -48,6 +51,7 @@
   // Handle form submission
   document.getElementById("backtest-form").addEventListener("submit", function(e) {
     e.preventDefault();
+
 
     // Get the selected time frames
     var timeFrames = [];

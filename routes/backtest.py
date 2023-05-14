@@ -3,10 +3,9 @@ import subprocess
 import os
 import re
 import configparser
-#xx
+#xz
 backtest_bp = Blueprint('backtest', __name__)
 
-# Read the config.ini file
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 strategies_path = config.get('FREQTRADE', 'strategies_path')
@@ -14,7 +13,6 @@ user_data_path = config.get('FREQTRADE', 'user_data_path')
 
 @backtest_bp.route('/backtest')
 def backtest():
-    print("Accessing backtest route")
     strategy_files = []
 
     for file_name in os.listdir(strategies_path):
@@ -26,8 +24,6 @@ def backtest():
                     class_name = match.group(1)
                     strategy_files.append(class_name)
 
-    print(strategy_files)
-
     return jsonify({'strategy_files': strategy_files})
 
 
@@ -35,16 +31,26 @@ def backtest():
 def run_backtest():
     strategy_name = request.form.get('strategy-select')
     time_frames = request.form.getlist('time_frames[]')
+    timerange = request.form.get('timerange')
 
-    print("Selected Time Frames:", time_frames)  # Print the selected time frames
+    print("Selected Time Frames:", time_frames)
+    print("Timerange:", timerange)
 
-    # Convert the time frames to a comma-separated string
     time_frames_str = ",".join(time_frames)
 
-    command = f"docker compose run freqtrade backtesting --strategy {strategy_name} --dry-run-wallet 1000 --timeframe {time_frames_str} --timerange 20230425-"
-    print("Running backtest command:", command)
-    result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=user_data_path)
-    print(result.stdout)
-    print(result.stderr)
+    command = ['docker', 'compose', 'run', 'freqtrade', 'backtesting', '--strategy', strategy_name, '--dry-run-wallet', '1000', '--timeframe', time_frames_str]
 
-    return jsonify({'result': result.stdout})
+    if timerange and timerange.strip() != "":
+        command.extend(['--timerange', timerange])
+
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, cwd=user_data_path)
+    output, error = process.communicate()
+
+    if error:
+        response = {'status': 'error', 'message': error.decode('utf-8')}
+    else:
+        response = {'status': 'success', 'message': output.decode('utf-8')}
+
+    return jsonify(response)
+
+

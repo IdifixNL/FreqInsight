@@ -3,7 +3,7 @@ import subprocess
 import os
 import re
 import configparser
-
+#xx
 backtest_bp = Blueprint('backtest', __name__)
 
 # Read the config.ini file
@@ -34,7 +34,14 @@ def backtest():
 @backtest_bp.route('/run_backtest', methods=['POST'])
 def run_backtest():
     strategy_name = request.form.get('strategy-select')
-    command = f"docker compose run freqtrade backtesting --strategy {strategy_name} --dry-run-wallet 1000 --timeframe 1d --timerange 20230425-"
+    time_frames = request.form.getlist('time_frames[]')
+
+    print("Selected Time Frames:", time_frames)  # Print the selected time frames
+
+    # Convert the time frames to a comma-separated string
+    time_frames_str = ",".join(time_frames)
+
+    command = f"docker compose run freqtrade backtesting --strategy {strategy_name} --dry-run-wallet 1000 --timeframe {time_frames_str} --timerange 20230425-"
     print("Running backtest command:", command)
     result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=user_data_path)
     print(result.stdout)

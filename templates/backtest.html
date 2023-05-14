@@ -1,13 +1,66 @@
 <div id="backtest" class="section">
-    <h2>Backtest</h2>
-    <form id="backtest-form">
-      <label for="strategy-select">Select strategy:</label>
-      <select id="strategy-select" name="strategy-select">
-        {% for name in strategy_names %}
-        <option value="{{ name }}">{{ name }}</option>
-        {% endfor %}
-      </select>
-  
-      <input type="submit" value="Backtest">
-    </form>
+  <h2>Backtest</h2>
+  <form id="backtest-form">
+    <label for="strategy-select">Select strategy:</label>
+    <select id="strategy-select" name="strategy-select">
+      {% for name in strategy_names %}
+      <option value="{{ name }}">{{ name }}</option>
+      {% endfor %}
+    </select>
+
+    <h3>Select time frames:</h3>
+    <input type="checkbox" id="select-all" name="select-all" value="select-all">
+    <label for="select-all">Select All</label><br>
+    <input type="checkbox" id="1m" name="time_frames" value="1m">
+    <label for="1m">1 minute</label><br>
+    <input type="checkbox" id="3m" name="time_frames" value="3m">
+    <label for="3m">3 minutes</label><br>
+    <input type="checkbox" id="5m" name="time_frames" value="5m">
+    <label for="5m">5 minutes</label><br>
+    <input type="checkbox" id="15m" name="time_frames" value="15m">
+    <label for="15m">15 minutes</label><br>
+    <input type="checkbox" id="30m" name="time_frames" value="30m">
+    <label for="30m">30 minutes</label><br>
+    <input type="checkbox" id="1h" name="time_frames" value="1h">
+    <label for="1h">1 hour</label><br>
+    <input type="checkbox" id="2h" name="time_frames" value="2h">
+    <label for="2h">2 hours</label><br>
+    <input type="checkbox" id="4h" name="time_frames" value="4h">
+    <label for="4h">4 hours</label><br>
+    <input type="checkbox" id="6h" name="time_frames" value="6h">
+    <label for="6h">6 hours</label><br>
+    <input type="checkbox" id="8h" name="time_frames" value="8h">
+    <label for="8h">8 hours</label><br>
+    <input type="checkbox" id="12h" name="time_frames" value="12h">
+    <label for="12h">12 hours</label><br>
+    <input type="checkbox" id="1d" name="time_frames" value="1d">
+    <label for="1d">1 day</label><br>
+    <input type="checkbox" id="3d" name="time_frames" value="3d">
+    <label for="3d">3 days</label><br>
+    <input type="checkbox" id="1w" name="time_frames" value="1w">
+    <label for="1w">1 week</label><br>
+
+    <input type="submit" value="Backtest">
+  </form>
 </div>
+
+<script>
+  // Handle form submission
+  document.getElementById("backtest-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Get the selected time frames
+    var timeFrames = [];
+    var checkboxes = document.querySelectorAll("input[name='time_frames']:checked");
+    checkboxes.forEach(function(checkbox) {
+      timeFrames.push(checkbox.value);
+      console.log(checkbox.value); // Log the checkbox value
+    });
+
+    // Display the selected time frames
+    console.log("Selected Time Frames: " + timeFrames.join(", "));
+    
+    // Submit the form (replace with your own logic)
+    // document.getElementById("backtest-form").submit();
+  });
+</script>
